@@ -33,3 +33,4 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin']], function () {
     Route::get('/edit/{id}', [DataController::class, 'edit'])->name('edit');
     Route::put('/update/{id}', [DataController::class, 'update'])->name('update');
 });
+// route
