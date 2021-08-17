@@ -16,12 +16,20 @@ use App\Http\Controllers\DataController;
 */
 
 Route::get('/', function () {
-    return view('/tambah');
+    return redirect('/home');
 });
 
-Route::get('/index', [DataController::class, 'index']);
-Route::get('/tambah', [DataController::class, 'tambah']);
-Route::post('/simpan', [DataController::class, 'simpan'])->name('simpan_data');
-Route::delete('/delete{id}', [DataController::class, 'delete']);
-Route::get('/edit/{id}', [DataController::class, 'edit'])->name('edit');
-Route::put('/update/{id}', [DataController::class, 'update'])->name('update');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/index', [DataController::class, 'index'])->name('index');
+
+
+Route::group(['middleware' => ['auth', 'CheckRole:admin']], function () {
+    Route::get('/tambah', [DataController::class, 'tambah']);
+    Route::post('/simpan', [DataController::class, 'simpan'])->name('simpan_data');
+    Route::delete('/delete{id}', [DataController::class, 'delete']);
+    Route::get('/edit/{id}', [DataController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [DataController::class, 'update'])->name('update');
+});

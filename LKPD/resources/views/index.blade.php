@@ -15,7 +15,9 @@
         @if (session('status'))
         <div class="alert alert-primary">{{session('status')}}</div>
       @endif
+      @if(auth()->user()->role == "admin")
         <a href="/tambah" class="btn btn-primary mb-5"><i class="fas fa-plus mr-2"></i>Tambah</a>
+      @endif
           <div class="row justify-content-center">
               <table class="table">
                 <thead>
